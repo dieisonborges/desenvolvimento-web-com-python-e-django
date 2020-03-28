@@ -46,10 +46,18 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-THIRD_APPS = []
+THIRD_APPS = [
+    #Docs: https://pypi.org/project/django-adminlte-3/
+    #General use templates & template tags (should appear first)
+    'adminlte3',
+    #Optional: Django admin theme (must be before django.contrib.admin)
+    'adminlte3_theme'
+]
 
 PROJECT_APPS = [
     'core.apps.CoreConfig',
+    'tasks.apps.TasksConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
@@ -122,7 +130,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-BR'
 
 TIME_ZONE = 'UTC'
 
