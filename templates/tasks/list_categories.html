@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Lista de Categorias - {{ block.super }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Categorias</h1>
+        <div class="row">
+            <div class="col-md-12">  
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Categoria</th>
+                                    <th>Descrição</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for category in categories  %}
+
+                                <tr>
+                                    <td>{{ category.id }}</td>
+                                    <td>{{ category.name }}</td>
+                                    <td>{{ category.description }}</td>
+                                    <td>
+                                        <a href="{% url 'category:edit_category' category.id %}" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            Editar
+                                        </a>
+                                        <a href="" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-times"></i>
+                                            Excluir
+                                        </a>
+                                    </td>
+                                </tr>
+                                    
+                                {% endfor %}
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Categoria</th>
+                                    <th>Descrição</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->                
+                
+            </div>
+        </div>        
+    </div>
+{% endblock content %}
