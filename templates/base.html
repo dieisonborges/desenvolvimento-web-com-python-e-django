@@ -17,6 +17,12 @@
     {% endblock %}
 
     {% block extra_head %}{% endblock %}
+    <!-- Date Picker Jquery UI -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body class="hold-transition sidebar-mini {% block body_class %}{% block bodyclass %}{% endblock %}{% endblock %}">
 
@@ -78,18 +84,43 @@
                             </a>
                             <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{% url 'category:list_categories' %}" class="nav-link">
+                                <a href="{% url 'tasks:list_categories' %}" class="nav-link">
                                     <i class="nav-icon fa fa-list-ul"></i>
                                     <p>Listar</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'category:add_category' %}" class="nav-link">
+                                <a href="{% url 'tasks:add_category' %}" class="nav-link">
                                     <i class="nav-icon fa fa-plus"></i>
                                     <p>Adicionar</p>
                                 </a>
                             </li>
                             
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-tasks"></i>
+                                <p>
+                                    Tarefas
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{% url 'tasks:list_tasks' %}" class="nav-link">
+                                        <i class="nav-icon fa fa-list-ul"></i>
+                                        <p>Listar</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'tasks:add_task' %}" class="nav-link">
+                                        <i class="nav-icon fa fa-plus"></i>
+                                        <p>Adicionar</p>
+                                    </a>
+                                </li>
+                        
                             </ul>
                         </li>
 
@@ -143,6 +174,40 @@
 {% block javascript %}
 {% include 'adminlte/lib/_scripts.html' %}
 {% endblock %}
+
+{% include 'partials/modals.html' %}
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Modal Scripts -->
+<script type="text/javascript">
+    $(document).on('click', '.confirm-delete', function () {
+        $('#modal-danger').attr('caller-id', $(this).attr('id')); 
+    });
+    $(document).on('click', '#modal-danger-confirm', function () {
+        var caller = $('#modal-danger-confirm').closest('.modal').attr('caller-id');
+        window.location = $('#'.concat(caller)).attr('href');
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#id_end_date").datepicker(
+            {
+                dateFormat: "dd/mm/yy",
+                dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+                monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+            }
+        );
+    });
+</script>
+
+<!-- Select2 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $("#id_category").select2();
+    
+</script>
 
 {% block extra_js %}{% endblock %}
 
