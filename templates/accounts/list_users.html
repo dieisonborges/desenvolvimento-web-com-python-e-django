@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Lista de Usuários - {{ block.super }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Usuários</h1>
+        <div class="row">
+            <div class="col-md-12">  
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Usuários</h3>
+                        <a href="{% url 'accounts:add_user' %}" class="btn btn-primary float-right">
+                            <i class="nav-icon fa fa-plus"></i>
+                        </a>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Primeiro Nome</th>
+                                    <th>Último Nome</th>
+                                    <th>Usuário</th>
+                                    <th>e-mail</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for user in users  %}
+
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.first_name }}</td>
+                                    <td>{{ user.last_name }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            Editar
+                                        </a>
+                                        <a href="#" class="btn btn-danger btn-sm confirm-delete" data-toggle="modal" data-target="#modal-danger" id="deleteButton-{{ user.id }}">
+                                            <i class="fa fa-times"></i>
+                                            Excluir
+                                        </a>
+                                    </td>
+                                </tr>
+                                    
+                                {% endfor %}
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Primeiro Nome</th>
+                                    <th>Último Nome</th>
+                                    <th>Usuário</th>
+                                    <th>e-mail</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->                
+                
+            </div>
+        </div>        
+    </div>
+    
+{% endblock content %}
