@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Alterar perfil - {{ block.super }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Alterar perfil</h1>
+        <div class="row">
+            <div class="col-md-12">   
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="{{ form.photo.id_for_label }}">{{ form.photo.label_tag }}</label>
+                        {{ form.photo|add_class:"form-control-file" }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.cell_phone.id_for_label }}">{{ form.cell_phone.label_tag }}</label>
+                        {{ form.cell_phone|add_class:"form-control" }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Salvar</button>
+                    <a href="/" class="btn btn-secondary float-right">
+                        <i class="nav-icon fa fa-list-ul"></i>
+                    </a>
+                
+                </form>
+                
+            </div>
+        </div>        
+    </div>
+{% endblock content %}
