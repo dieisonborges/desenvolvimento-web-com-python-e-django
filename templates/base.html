@@ -84,15 +84,22 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                    <img src="https://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?s=90&amp;d=mm" class="img-circle elevation-2" alt="User Image">
+                        
+                        {% if user.profile.photo %}
+                            <img src="{{ user.profile.photo.url }}" class="rounded-circle" alt="User Image">
+                        {% else %}
+                            <img src="{% static 'img/profile.png' %}" class="img-circle elevation-2" alt="User Image" width="90" height="90">
+                        {% endif %}                           
+                        
                     </div>
+
                     <div class="info">
                     {% if user.is_authenticated %}
                         <a href="#" class="d-block">
                             {{ user.get_full_name|default:user.username }}    
                         </a>
                         <div class="col-md-12 mt-2">
-                            <a href="{% url 'accounts:add_user_profile' %}">
+                            <a href="{% url 'accounts:list_user_profile' %}">
                                 <i class="fa fa-id-card"></i>
                                 Perfil
                             </a>
@@ -257,35 +264,13 @@
 {% include 'partials/modals.html' %}
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.mask.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 
 <!-- Modal Scripts -->
-<script type="text/javascript">
-    $(document).on('click', '.confirm-delete', function () {
-        $('#modal-danger').attr('caller-id', $(this).attr('id')); 
-    });
-    $(document).on('click', '#modal-danger-confirm', function () {
-        var caller = $('#modal-danger-confirm').closest('.modal').attr('caller-id');
-        window.location = $('#'.concat(caller)).attr('href');
-    });
-</script>
+<script type="text/javascript" src="{% static 'js/masks.js' %}"></script>
 
-<script type="text/javascript">
-    $(function () {
-        $("#id_end_date").datepicker(
-            {
-                dateFormat: "dd/mm/yy",
-                dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-                monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
-            }
-        );
-    });
-</script>
-
-<!-- Select2 -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script type="text/javascript">
-    $("#id_category").select2();    
-</script>
 
 {% block extra_js %}{% endblock %}
 

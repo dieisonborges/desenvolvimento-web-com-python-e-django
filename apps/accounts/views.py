@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import UserForm, UserProfileForm
+from .forms import UserForm, UserProfileForm, UserFormChangeInformation
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from .models import UserProfile
 
 #User Login
 def user_login(request):
@@ -83,5 +84,40 @@ def add_user_profile(request):
             f.save()
             messages.success(request, 'Modificado com sucesso!')
     form = UserProfileForm()
+    context['form'] = form
+    return render(request, template_name, context)
+
+
+@login_required(login_url='/usuarios/login/')
+def list_user_profile(request):
+    template_name = 'accounts/list_user_profile.html'
+    return render(request, template_name, {})
+
+@login_required(login_url='/usuarios/login/')
+def change_user_profile(request, username):
+    template_name = 'accounts/add_user_profile.html'
+    context = {}
+    profile = UserProfile.objects.get(user__username=username)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Modificado com sucesso!')
+    form = UserProfileForm(instance=profile)
+    context['form'] = form
+    return render(request, template_name, context)
+
+
+@login_required(login_url='/usuarios/login/')
+def change_user_information(request, username):
+    template_name = 'accounts/change_user_information.html'
+    context = {}
+    user = User.objects.get(username=username)
+    if request.method == 'POST':
+        form = UserFormChangeInformation(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Modificado com sucesso!')
+    form = UserFormChangeInformation(instance=user)
     context['form'] = form
     return render(request, template_name, context)
