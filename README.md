@@ -7,6 +7,7 @@ pip install django-heroku
 pip freeze > requirements.txt
 heroku login
 heroku create dev-web-com-python-e-django
+
 heroku addons:create heroku-postgresql:hobby-dev
 
 > Creating heroku-postgresql:hobby-dev on ⬢ dev-web-com-python-e-django... free
@@ -14,6 +15,9 @@ heroku addons:create heroku-postgresql:hobby-dev
 > ! This database is empty. If upgrading, you can transfer
 > ! data from another database with pg:copy
 >Created postgresql-pointy-86006 as DATABASE_URL
+
+Create Procfile
+web: gunicorn todoapp.wsgi
 
 git add .
 git commit -m "First Deploy"
