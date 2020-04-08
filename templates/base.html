@@ -39,9 +39,9 @@
             </ul>
                     
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            <form class="form-inline ml-3" action="{% url 'core:search_tasks' %}" method="GET">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search">
+                    <input name="query" value="{{ param_search|default:'' }}" class="form-control form-control-navbar" type="search" placeholder="Buscar" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>

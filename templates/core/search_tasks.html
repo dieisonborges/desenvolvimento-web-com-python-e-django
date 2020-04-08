@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Lista de Tarefas - {{ block.super }}
+{% endblock title %}
+{% block content %}
+    <div class="container">
+        <h1>Tarefas</h1>
+        <div class="row">
+            <div class="col-md-12">  
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Tarefas</h3>
+                        <a href="{% url 'tasks:add_task' %}" class="btn btn-primary float-right">
+                            <i class="nav-icon fa fa-plus"></i>
+                        </a>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Categoria</th>
+                                    <th>Prioridade</th>
+                                    <th>Status</th>
+                                    <th>Data Final</th>
+                                    <th>Descrição</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for task in tasks  %}
+
+                                <tr>
+                                    <td>{{ task.id }}</td>
+                                    <td>{{ task.name }}</td>
+                                    <td>{{ task.get_priority_display }}</td>
+                                    <td>{{ task.get_status_display }}</td>
+                                    <td>{{ task.end_date }}</td>
+                                    <td>{{ task.description }}</td>
+                                    <td>
+                                        <a href="{% url 'tasks:edit_task' task.id %}" class="btn btn-primary btn-sm">
+                                            <i class="fa fa-edit"></i>
+                                            Editar
+                                        </a>
+                                        <a href="{% url 'tasks:delete_task' task.id %}" class="btn btn-danger btn-sm confirm-delete" data-toggle="modal" data-target="#modal-danger" id="deleteButton-{{ task.id }}">
+                                            <i class="fa fa-times"></i>
+                                            Excluir
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+
+                                <tr>
+                                    <td colspan="4">Nenhum resultado
+                                    </td>
+                                </tr>
+                                    
+                                {% endfor %}
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Categoria</th>
+                                    <th>Prioridade</th>
+                                    <th>Status</th>
+                                    <th>Data Final</th>
+                                    <th>Descrição</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->                
+                
+            </div>
+        </div>        
+    </div>
+{% endblock content %}

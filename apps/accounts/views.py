@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
+from django.core.exceptions import MultipleObjectsReturned
 
 #User Login
 def user_login(request):
@@ -73,16 +74,19 @@ def user_change_password(request):
     return render(request, template_name, context)
 
 @login_required(login_url='/usuarios/login/')
-def add_user_profile(request):
+def add_user_profile(request):    
     template_name = 'accounts/add_user_profile.html'
     context = {}
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = form.save(commit=False)
-            f.user = request.user
-            f.save()
-            messages.success(request, 'Modificado com sucesso!')
+        try:
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.user = request.user
+                f.save()
+                messages.success(request, 'Modificado com sucesso!')
+        except MultipleObjectsReturned:
+            messages.error(request, 'Já existe um perfil!')
     form = UserProfileForm()
     context['form'] = form
     return render(request, template_name, context)
