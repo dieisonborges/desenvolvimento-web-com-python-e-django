@@ -8,6 +8,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
 from django.core.exceptions import MultipleObjectsReturned
+from django.http import HttpResponseRedirect
 
 #User Login
 def user_login(request):
@@ -26,6 +27,22 @@ def user_login(request):
     return render(request, template_name, {})
 
 # Create your views here.
+
+def add_user_register(request):
+    template_name = 'accounts/add_user_register.html'
+    context = {}
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.set_password(f.password)
+            f.save()
+            messages.success(request, 'Criado com sucesso!')
+            return HttpResponseRedirect('/')
+    form = UserForm()
+    context['form'] = form
+    return render(request, template_name, context)
+
 @login_required(login_url='/usuarios/login/')
 def add_user(request):
     template_name = 'accounts/add_user.html'

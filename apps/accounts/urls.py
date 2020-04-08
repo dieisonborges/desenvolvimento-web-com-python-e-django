@@ -7,6 +7,7 @@ urlpatterns = [
     #user
     path('', views.list_users, name='list_users'),
     path('login/', views.user_login, name='user_login'),
+    path('cadastro/', views.add_user_register, name='add_user_register'),
     path('logout/', views.user_logout, name='user_logout'),
     path('alterar-senha/', views.user_change_password, name='user_change_password'),
     path('novo-perfil/', views.add_user_profile, name='add_user_profile'),
